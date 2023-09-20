@@ -16,20 +16,19 @@ async def earthquake_latest():
 
     eheaders = []
     for i in drow_headers.find_all("th"):
-        eheaders.append(i.get_text().strip())
+        eheaders.append(" ".join([i.strip() for i in i.get_text().strip().split("\n")]))
 
     eheaders.append("Link")
-    edatas.append(eheaders)
 
     for j in drow_datas:
-        edata_arr = []
+        edata_arr = {}
 
-        for k in j.find_all("td"):
-            edata_arr.append(k.get_text().strip())
+        for index, k in enumerate(j.find_all("td")):
+            edata_arr[eheaders[index]] = k.get_text().strip()
 
         if j.find("a"):
-            edata_arr.append(MAIN_URL + j.find("a")["href"])
+            edata_arr["Link"] = MAIN_URL + j.find("a")["href"]
 
         edatas.append(edata_arr)
 
-    return edatas
+    return {"headers": eheaders, "data": edatas}
