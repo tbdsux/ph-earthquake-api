@@ -62,7 +62,9 @@ def table_contents_parser(table_rows, table_headers):
             edata_arr[table_headers[index]] = k.get_text().strip()
 
         if j.find("a"):
-            edata_arr["Link"] = urljoin(MAIN_URL, j.find("a")["href"])
+            edata_arr["Link"] = urljoin(
+                MAIN_URL, j.find("a")["href"].replace("..", "").replace("\\", "/")
+            )
 
         edatas.append(edata_arr)
 

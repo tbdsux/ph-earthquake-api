@@ -13,7 +13,10 @@ def earthquake_data(year: int, month: int):
     month_str = calendar.month_name[month]
     url = f"{MONTHLY_DATA_URL}/{year}/{year}_{month_str}.html"
 
-    s = get_scrape(url)
+    [ok, s] = get_scrape(url)
+    if not ok:
+        return {"message": f"No data from {month_str}, {year} yet."}
+
     tables = s.find_all("table")
 
     use_td_head = False
