@@ -1,9 +1,13 @@
-from utils.config import MAIN_URL
-from utils.scraper import get_scrape
+from api.utils.config import MAIN_URL
+from api.utils.scraper import get_scrape
+from fastapi import APIRouter
 
 
 async def earthquake_latest():
-    s = get_scrape()
+    """
+    Get and parse the latest earthquake data.
+    """
+    s = get_scrape(MAIN_URL)
 
     tables = s.find_all("table")
     data_table = tables[2]
@@ -32,3 +36,14 @@ async def earthquake_latest():
         edatas.append(edata_arr)
 
     return {"headers": eheaders, "data": edatas}
+
+
+# setup router
+router = APIRouter(
+    prefix="/latest", tags=["latest"], responses={404: {"message": "Not Found"}}
+)
+
+
+@router.get("/")
+async def get_latest():
+    return await earthquake_latest()
