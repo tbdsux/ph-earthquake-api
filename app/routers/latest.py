@@ -1,16 +1,19 @@
-from api.functions.parser import table_parser
-from api.utils.config import MAIN_URL
-from api.utils.scraper import get_scrape
 from fastapi import APIRouter
+
+from app.functions.parser import table_parser
+from app.utils.config import MAIN_URL
+from app.utils.scraper import get_scrape
 
 
 def earthquake_latest():
     """
     Get and parse the latest earthquake data.
     """
-    s = get_scrape(MAIN_URL)
+    res = get_scrape(MAIN_URL)
+    if not res[0]:
+        return res[1]
 
-    tables = s.find_all("table")
+    tables = res[1].find_all("table")
     data_table = tables[2]
 
     parsed_data = table_parser(data_table)

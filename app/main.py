@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from api.routers import latest, data
+from app.routers import data, latest
 
 app = FastAPI()
 

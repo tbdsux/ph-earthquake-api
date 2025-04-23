@@ -1,5 +1,6 @@
-from api.utils.config import MAIN_URL
 from urllib.parse import urljoin
+
+from app.utils.config import MAIN_URL
 
 
 def special_2017(tables):

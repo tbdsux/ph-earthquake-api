@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Response, status
-from api.functions.parser import table_parser, special_2017
-from api.utils.config import MONTHLY_DATA_URL
 import calendar
 
-from api.utils.scraper import get_scrape
+from fastapi import APIRouter, Response, status
+
+from app.functions.parser import special_2017, table_parser
+from app.utils.config import MONTHLY_DATA_URL
+from app.utils.scraper import get_scrape
 
 
 def earthquake_data(year: int, month: int):
