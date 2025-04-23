@@ -1,0 +1,9 @@
+services:
+  eq-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: eq-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000" # set "127.0.0.1:8000" to expose only to host
