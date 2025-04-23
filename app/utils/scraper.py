@@ -17,6 +17,8 @@ def get_scrape(url: str):
         if not r.ok:
             raise Exception("Failed to fetch page, does the page exists?")
 
+        r.encoding = "utf-8"  # force utf-8 encoding
+
         return [True, BeautifulSoup(r.text, "lxml")]
     except Exception as e:
         return [False, str(e)]
