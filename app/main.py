@@ -3,7 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import data, latest
 
-api_app = FastAPI()
+api_app = FastAPI(
+    redirect_slashes=False,
+    title="PHIVOLCS Earthquake Scraper",
+)
 
 # Setup CORS
 api_app.add_middleware(
