@@ -3,10 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import data, latest
 
-app = FastAPI()
+api_app = FastAPI()
 
 # Setup CORS
-app.add_middleware(
+api_app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=False,
@@ -14,10 +14,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(latest.router)
-app.include_router(data.router)
+api_app.include_router(latest.router)
+api_app.include_router(data.router)
 
 
-@app.get("/")
+@api_app.get("/")
 async def main():
     return "PHIVOLCS LATEST EARTHQUAKE INFORMATION (earthquake.phivolcs.dost.gov.ph) ... scraper"
+
+
+app = FastAPI()
+app.mount("/api", api_app)
